@@ -1,0 +1,96 @@
+---
+title: "EDS221 Day 4 Tasks"
+format: html
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+library(dplyr)
+```
+
+### Afternoon stuff 
+
+### Warnings
+
+```{r}
+}
+calculate_betz_windpower <- function(air_density, rotor_radius, wind_velocity) {
+  if (wind_velocity > 130) {
+        warning("Slow down!")
+  }
+  0.3 * air_density * pi * (rotor_radius^2) * (wind_velocity^3)
+}
+```
+
+### Task 1
+
+```{r}
+weekdays <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+transects <- c("Transect A", "Transect B", "Transect C")
+values <- matrix(nrow = 7, ncol = 3)
+
+for (i in 1:length(transects)) {
+  for (j in 1:length(weekdays)) {
+    values[j, i] <- paste(weekdays[j], "-", transects[i])
+  }
+}
+
+```
+
+### Task 2
+
+Write a function called `force` that calculates a force (in Newtons), given inputs of mass (in kg) and acceleration (in ms2��2 (recall: F=ma�=��), and returns a statement \"The resulting force is \_\_\_ Newtons.\"
+
+```{r}
+force <- function(mass, acc) {
+  value = mass * acc
+  cat("The result force is", value, "Newtons")
+}
+```
+
+### Task 3
+
+```{r}
+fish_parms <- data.frame(sci_name = c("Chanos chanos", "Sphyraena barracuda", "Caranx ignobilis"),
+                         common_name = c("Milkfish", "Great barracuda", "Giant trevally"),
+                         a_est = c(0.0905, 0.0181, 0.0353),
+                         b_est = c(2.52, 3.27, 3.05))
+
+milkfish_vec <- seq(from = 1, to = 100, by = 1)
+fish_weight <- function(fish_name, length) {
+  match <- dplyr::filter(fish_parms, common_name == fish_name)
+  match_a <- match$a_est
+  match_b <- match$b_est
+  
+  weight <- match_a * (length ^ match_b)
+}
+
+milkfish_weights <- fish_weight("Milkfish", milkfish_vec)
+```
+
+### Task 4
+
+```{r}
+height_seq <- seq(from = 0, to = 3, by = 0.2)
+wave_power <- function(height, period) {
+  print(power <- 0.5 * (height ^ 2) * period)
+}
+```
+
+### Task 5
+
+```{r}
+wave_energy <- function(water_depth, wave_height, period) {
+  if (water_depth < 0) {
+    warning("This is impossible!")
+  } else if (water_depth <= 12) {
+    warning("You are in shallow ocean territory!")
+    energy <- 0.5 * (wave_height ^ 2) * period
+  } else {
+    warning("You are in deep ocean territory!")
+    energy <- 0.81 * (wave_height ^ 2) * period
+  }
+  print(energy)
+}
+```
